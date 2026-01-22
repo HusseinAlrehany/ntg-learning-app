@@ -1,0 +1,112 @@
+.categories-container {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Section Header */
+.section-header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: green;
+  margin-bottom: 8px;
+}
+
+/* Category Card */
+.category-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+/* Category Header */
+.category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 22px;
+}
+
+.category-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+}
+
+.toggle-icon {
+  font-size: 22px;
+  font-weight: 700;
+  color: #2563eb;
+  width: 24px;
+  text-align: center;
+}
+
+.category-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+}
+
+/* Actions */
+.category-actions,
+.topic-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-btn {
+  background: #f1f5f9;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s ease;
+}
+
+.icon-btn:hover {
+  background: #e2e8f0;
+}
+
+.icon-btn.danger {
+  background: #fee2e2;
+}
+
+.icon-btn.danger:hover {
+  background: #fecaca;
+}
+
+/* Topics */
+.topics-list {
+  padding: 10px 22px 18px;
+  border-top: 1px solid #e5e7eb;
+  background: #f8fafc;
+}
+
+.topic-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.topic-row:not(:last-child) {
+  border-bottom: 1px dashed #e5e7eb;
+}
+
+.topic-name {
+  font-size: 14px;
+  color: #334155;
+}
+
+/* Empty */
+.empty-state {
+  font-size: 13px;
+  color: red;
+  padding-top: 10px;
+}

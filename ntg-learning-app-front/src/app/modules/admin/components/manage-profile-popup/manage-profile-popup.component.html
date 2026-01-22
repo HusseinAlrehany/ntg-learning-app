@@ -1,0 +1,108 @@
+<div *ngIf="isOpen" class="popup-overlay">
+  <div class="popup-container">
+    <button class="close-btn" (click)="onCancel()">&times;</button>
+
+    <h2 class="popup-title">{{ isEditMode ? 'Edit Profile' : 'Add New Category' }}</h2>
+
+    <form 
+      *ngIf="!isEditMode"
+      [formGroup]="categoryForm" 
+      (ngSubmit)="onSubmit()" class="popup-form">
+      <div>
+        <label class="form-label">Category Name</label>
+        <input
+          type="text"
+          formControlName="name"
+          class="form-input"
+          placeholder="Enter category name"
+        />
+
+        <p
+          class="form-error"
+          *ngIf="
+            categoryForm.get('name')?.touched &&
+            categoryForm.get('name')?.invalid
+          "
+        >
+          Category name is required (min 3 characters).
+        </p>
+      </div>
+
+      <div class="button-row">
+        <div *ngIf="errorMessage" class="backend-error">
+          {{ errorMessage }}
+        </div>
+
+        <button type="button" class="cancel-btn" (click)="onCancel()">
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="submit-btn"
+          [disabled]="categoryForm.invalid"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+
+    <!--EDIT PROFILE FORM-->
+
+    <div *ngIf="isEditMode" class="popup-form">
+
+      <!-- Developer Name -->
+      <div>
+        <label class="form-label">Developer Name</label>
+        <input
+          type="text"
+          class="form-input"
+          [value]="profile?.devName"
+        
+        />
+      </div>
+
+      <!-- Read-only Progress Section -->
+      <div class="readonly-section">
+        <div class="readonly-title">Overall Progress</div>
+
+        <div class="status-grid">
+          <div class="status-box">
+            <span class="status-label-sm">In Progress</span>
+            <span class="status-value-mono">
+              {{ profile?.inProgress }}
+            </span>
+          </div>
+
+          <div class="status-box">
+            <span class="status-label-sm">Mastered</span>
+            <span class="status-value-mono">
+              {{ profile?.mastered }}
+            </span>
+          </div>
+
+          <div class="status-box">
+            <span class="status-label-sm">Not Started</span>
+            <span class="status-value-mono">
+              {{ profile?.notStarted }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="button-row">
+        <button class="cancel-btn" (click)="onCancel()">
+          Close
+        </button>
+        <button
+          type="submit"
+          class="submit-btn"
+        >
+          Save
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+</div>

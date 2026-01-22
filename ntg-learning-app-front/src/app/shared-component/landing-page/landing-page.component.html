@@ -1,0 +1,31 @@
+
+<app-navbar (openAuthModal)="openAuth($event)"></app-navbar>
+
+
+<section class="hero">
+  <span class="badge">✨ Start your learning journey today</span>
+
+  <h1>
+    Master New Skills with <br />
+    <span>NTG Learning</span>
+  </h1>
+
+  <p>
+    Unlock your potential with interactive courses, expert instructors,
+    and a supportive community. Learn at your own pace, anytime, anywhere.
+  </p>
+
+  <button class="primary-btn" (click)="openAuth('signup')">
+    Get Started Free →
+  </button>
+</section>
+
+
+<app-auth-model
+  *ngIf="showAuth"
+  [mode]="authMode"
+  (close)="showAuth = false"
+  
+>
+</app-auth-model>
+

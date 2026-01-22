@@ -1,0 +1,66 @@
+<div *ngIf="isOpen" class="popup-overlay">
+  <div class="popup-container">
+    <button class="close-btn" (click)="onCancel()">&times;</button>
+
+    <h2 class="popup-title">
+      {{ isEditMode ? "Edit Topic" : "Edit Category" }}
+    </h2>
+
+    <!--Edit Category Form-->
+    <form *ngIf="!isEditMode" [formGroup]="editCategoryForm" class="popup-form">
+      <div>
+        <label class="form-label">Category Name</label>
+        <input
+          type="text"
+          formControlName="categoryName"
+          class="form-input"
+        />
+      </div>
+
+      <div class="button-row">
+        <div *ngIf="errorMessage" class="backend-error">
+          {{ errorMessage }}
+        </div>
+
+        <button type="button" class="cancel-btn" (click)="onCancel()">
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="submit-btn"
+          [disabled]="editCategoryForm.invalid"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+
+    <!--EDIT Topic FORM-->
+
+    <div *ngIf="isEditMode" class="popup-form">
+      <form *ngIf="isEditMode" [formGroup]="editTopicForm" class="popup-form">
+        <div>
+          <label class="form-label">Topic Name</label>
+          <input type="text" formControlName="name" class="form-input" />
+        </div>
+
+        <!-- category name (read-only) -->
+        <div>
+          <label class="form-label">Category</label>
+          <input
+            type="text"
+            class="form-input"
+            [value]="category?.categoryName"            
+          />
+        </div>
+
+      </form>
+
+      <!-- Buttons -->
+      <div class="button-row">
+        <button class="cancel-btn" (click)="onCancel()">Close</button>
+        <button type="submit" class="submit-btn">Save</button>
+      </div>
+    </div>
+  </div>
+</div>

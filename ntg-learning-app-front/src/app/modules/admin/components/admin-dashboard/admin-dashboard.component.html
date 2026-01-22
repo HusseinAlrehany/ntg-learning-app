@@ -1,0 +1,57 @@
+<div class="admin-page">
+  <header class="admin-header">
+    <h1 class="title">Profiles</h1>
+    <button (click)="logout()" class="logout-btn">Logout</button>
+  </header>
+
+  <!-- Stats / Add Section -->
+  <div class="stats-bar">
+    <div>
+      <span class="stats-label">Total Developers</span>
+      <span class="stats-value">{{ profilesList.length }}</span>
+    </div>
+
+    <div class="stats-actions">
+        <button (click)="openAddCategoryPopup()" class="add-btn">
+        <span>+</span> Add New Category
+        </button>  
+        <button class="add-btn" [routerLink]="'/admin/view-topics'">View Topics and Category</button>   
+    </div>
+          
+  </div>
+
+  <!-- List -->
+  <div class="profiles-list">
+    <div *ngFor="let p of profilesList" class="profile-card">
+      <div class="profile-info">
+        <!-- Avatar Placeholder -->
+        <div class="avatar-small">
+          {{ p.userName != null ? p.userName.charAt(0) : "" }}
+        </div>
+        <div>
+          <h3 class="profile-name">{{ p.userName }}</h3>
+          <p class="profile-code">{{ p.overAllProgress }}%</p>
+        </div>
+      </div>
+
+      <div class="actions-group">
+        <!-- Status Dot logic? Green=Skilled, etc. Just simple text for now -->
+        <span class="status-badge">
+          <!--{{ getHighestStatus(p) }}-->
+        </span>
+        <button class="icon-btn" (click)="openEditPopup(p.userId)">⚙️</button>
+        <button class="icon-btn" (click)="deleteUserById(p.userId)">🗑️</button>
+      </div>
+    </div>
+  </div>
+
+  <app-manage-profile-popup
+    (close)="closePopup()"
+    (save)="handleCategorySave($event)"
+    [isOpen]="isPopupOpen()"
+    [isEditMode]="selectedProfile() !== null"
+    [profile]="selectedProfile()"
+    [errorMessage]="errorMessage"
+  >
+  </app-manage-profile-popup>
+</div>

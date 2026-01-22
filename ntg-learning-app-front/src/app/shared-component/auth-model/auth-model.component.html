@@ -1,0 +1,94 @@
+<div class="overlay">
+  <div class="modal">
+    <button class="close" (click)="close.emit()">✕</button>
+
+    <div class="header">
+      <h2 *ngIf="mode === 'signin'">Welcome Back!</h2>
+      <h2 *ngIf="mode === 'signup'">Start Learning Today</h2>
+
+      <p *ngIf="mode === 'signin'">Sign in to continue your learning journey</p>
+      <p *ngIf="mode === 'signup'">
+        Create your account and unlock your potential
+      </p>
+    </div>
+
+    <div class="tabs">
+      <button [class.active]="mode === 'signin'" (click)="switchMode('signin')">
+        Sign In
+      </button>
+      <button [class.active]="mode === 'signup'" (click)="switchMode('signup')">
+        Sign Up
+      </button>
+    </div>
+
+    <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+      <input
+        *ngIf="mode === 'signup'"
+        type="text"
+        placeholder="Full Name"
+        formControlName="name"
+      />
+
+      <div
+        class="error"
+        *ngIf="
+          authForm.get('name')?.touched &&
+          authForm.get('name')?.hasError('required')
+        "
+      >
+        Full name is Required.
+      </div>
+
+      <input type="email" placeholder="Email Address" formControlName="email" />
+      <div
+        class="error"
+        *ngIf="authForm.get('email')?.touched && authForm.get('email')?.errors"
+      >
+        <span *ngIf="authForm.get('email')?.hasError('required')">
+          Email is required.
+        </span>
+
+        <span *ngIf="authForm.get('email')?.hasError('email')">
+          Enter a valid email address.
+        </span>
+      </div>
+
+      <input
+        type="password"
+        placeholder="Password"
+        formControlName="password"
+      />
+      <div
+        class="error"
+        *ngIf="
+          authForm.get('password')?.touched &&
+          authForm.get('password')?.hasError('required')
+        "
+      >
+        Password is required.
+      </div>
+
+      <a *ngIf="mode === 'signin'" class="forgot">Forgot password?</a>
+
+      <div *ngIf="errorMessage" class="backend-error">
+        {{ errorMessage }}
+      </div>
+
+      <button class="primary-btn" type="submit" [disabled]="authForm.invalid">
+        {{ mode === "signin" ? "Sign In" : "Create Account" }} →
+      </button>
+    </form>
+
+    <p class="switch">
+      <ng-container *ngIf="mode === 'signin'">
+        Don't have an account?
+        <a (click)="switchMode('signup')">Sign up</a>
+      </ng-container>
+
+      <ng-container *ngIf="mode === 'signup'">
+        Already have an account?
+        <a (click)="switchMode('signin')">Sign in</a>
+      </ng-container>
+    </p>
+  </div>
+</div>

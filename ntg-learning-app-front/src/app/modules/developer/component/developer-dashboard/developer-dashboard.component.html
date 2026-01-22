@@ -1,0 +1,27 @@
+<div class="dev-page">
+    <header class="dev-header">
+        <h1 class="title">Topics</h1>
+        <button (click)="logout()" class="logout-btn">Logout</button>
+    </header>
+
+    <!-- Stats / Add Section -->
+    <div class="stats-bar">
+        <div>
+            <span class="stats-label">Total Developers</span>
+            <span class="stats-value"></span>
+        </div>
+        <button class="add-btn" (click)="openAddTopicPopup()">
+            <span>+</span> Add New Topic
+        </button>
+    </div>
+
+
+
+
+
+    <app-manage-topic-popup
+       (close)="closePopup()"
+       [isOpen]="isPopupOpen()">
+        
+    </app-manage-topic-popup>
+    </div>
