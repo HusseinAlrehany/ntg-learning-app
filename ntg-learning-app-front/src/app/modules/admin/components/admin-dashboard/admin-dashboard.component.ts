@@ -9,11 +9,12 @@ import { NotificationService } from '../../../../services/notification/notificat
 import { AdminService } from '../../service/admin.service';
 import { Category } from '../../../../models/category';
 import { UserProfile } from '../../../../models/user-profile';
+import { AddTopicPopupComponent } from '../add-topic-popup/add-topic-popup.component';
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [ManageProfilePopupComponent, CommonModule, RouterLink],
+  imports: [ManageProfilePopupComponent, CommonModule, RouterLink, AddTopicPopupComponent],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.css'
 })
@@ -23,6 +24,7 @@ export class AdminDashboardComponent implements OnInit{
   
   profilesList: any[] = [];
   isPopupOpen = signal(false);
+  isAddTopicOpen = signal(false);
   selectedProfile = signal<UserProfile | null>(null);
 
 
@@ -41,6 +43,11 @@ openAddCategoryPopup() {
   //this.isAddCategoryOpen = true;
   this.selectedProfile.set(null);
   this.isPopupOpen.set(true);
+}
+
+openAddTopicPopup() {
+  this.errorMessage = '';
+  this.isAddTopicOpen.set(true);
 }
 
 openEditPopup(userId: number){
@@ -69,6 +76,11 @@ closePopup(){
   this.errorMessage = '';
 }
 
+closeTopicPopup() {
+  this.isAddTopicOpen.set(false);
+  this.errorMessage = '';
+}
+
 handleCategorySave(category: Category) {
   console.log('New category:', category);
   
@@ -88,6 +100,20 @@ handleCategorySave(category: Category) {
     
 }
 
+handleTopicSave(topic: any) {
+  this.adminService.addTopic(topic).subscribe({
+    next: (res) => {
+      this.notificationService.success(res.message);
+      this.closePopup();
+      this.router.navigate(['/admin/view-topics']);
+    },
+    error: (error: HttpErrorResponse) => {
+      this.errorMessage = error.error?.message ||
+                          error.error?.error ||
+                          'failed to add topic';
+    }
+  });
+}
 
 profiles(){
    this.profilesList = [];

@@ -1,0 +1,83 @@
+<div *ngIf="isOpen" class="popup-overlay">
+  <div class="popup-container">
+    <button class="close-btn" (click)="onCancel()">&times;</button>
+
+    <h2 class="popup-title">Add Topic</h2>
+
+    <form [formGroup]="addTopicForm"
+          class="popup-form"
+          (ngSubmit)="onSubmit()">
+
+      <!-- Topic Name -->
+      <div>
+        <label class="form-label">Topic Name</label>
+        <input
+          type="text"
+          formControlName="name"
+          class="form-input"
+          placeholder="Enter topic name"
+        />
+
+         <div
+        class="error"
+        *ngIf="
+          addTopicForm.get('name')?.touched &&
+          addTopicForm.get('name')?.hasError('required')
+        "
+      >
+        Topic name is Required.
+      </div>
+      </div>
+
+      <!-- Topic Description -->
+      <div>
+        <label class="form-label">Description</label>
+        <textarea
+          formControlName="description"
+          class="form-textarea"
+          placeholder="Enter topic description"
+          rows="4">
+        </textarea>
+
+         <div
+        class="error"
+        *ngIf="
+          addTopicForm.get('description')?.touched &&
+          addTopicForm.get('description')?.hasError('required')
+        "
+      >
+        Description is Required.
+      </div>
+      </div>
+
+      <!-- Category Dropdown -->
+      <div>
+        <label class="form-label">Category</label>
+        <select
+          formControlName="categoryId"
+          class="form-select">
+          <option value="" disabled selected>Select category</option>
+          <option *ngFor="let c of categories" [value]="c.categoryId">
+            {{ c.categoryName }}
+          </option>
+        </select>
+      </div>
+
+      <div class="button-row">
+        <div *ngIf="errorMessage" class="backend-error">
+          {{ errorMessage }}
+        </div>
+
+        <button type="button" class="cancel-btn" (click)="onCancel()">
+          Cancel
+        </button>
+
+        <button type="submit"
+                class="submit-btn"
+                [disabled]="addTopicForm.invalid">
+          Save Topic
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

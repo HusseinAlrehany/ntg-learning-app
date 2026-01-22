@@ -1,6 +1,7 @@
 package com.ntg.demo.mapper;
 
 import com.ntg.demo.dto.TopicDTO;
+import com.ntg.demo.dto.UpdateTopicRequest;
 import com.ntg.demo.entity.Topic;
 import org.springframework.stereotype.Component;
 
@@ -41,6 +42,13 @@ public class TopicMapper {
                 .map(this::toDTO)
                 .toList() : new ArrayList<>();
 
+    }
+
+    public Topic updateTopicFromDTO(Topic topic, UpdateTopicRequest updateTopicRequest){
+
+        topic.setName(updateTopicRequest.getTopicName());
+
+        return topic;
     }
 
 }

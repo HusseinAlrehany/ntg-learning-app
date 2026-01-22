@@ -75,12 +75,33 @@ public class AdminController {
         return ResponseEntity.ok(new ApiResponse<>("Topic deleted successfully"));
     }
 
-    @DeleteMapping("/admin/deleteCategory")
+    @DeleteMapping("/deleteCategory")
     public ResponseEntity<ApiResponse<String>> deleteCategoryById(@RequestParam Integer categoryId){
 
         adminService.deleteCategoryById(categoryId);
 
         return ResponseEntity.ok(new ApiResponse<>("Category deleted successfully"));
+    }
+
+  @PutMapping("/updateCategory")
+  public ResponseEntity<ApiResponse<String>> updateCategory(@RequestBody UpdateCategoryRequest updateCategoryRequest,
+                                                            @RequestParam Integer categoryId)  {
+        adminService.updateCategory(updateCategoryRequest, categoryId);
+    return ResponseEntity.ok(new ApiResponse<>("Category updated Successfully"));
+  }
+
+
+    @PutMapping("/updateTopic")
+    public ResponseEntity<ApiResponse<String>> updateTopic(@RequestBody UpdateTopicRequest updateTopicRequest,
+                                                              @RequestParam Integer topicId)  {
+        adminService.updateTopic(updateTopicRequest, topicId);
+        return ResponseEntity.ok(new ApiResponse<>("Topic updated Successfully"));
+    }
+
+    @GetMapping("/allCategoriesDropDown")
+    public ResponseEntity<List<CategoryProjection>> getCategoriesDropDown(){
+
+        return ResponseEntity.ok(adminService.getAllCategoryDropDown());
     }
 
 

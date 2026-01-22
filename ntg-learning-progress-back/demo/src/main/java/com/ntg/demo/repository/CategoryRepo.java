@@ -3,11 +3,13 @@ package com.ntg.demo.repository;
 import com.ntg.demo.dto.CategoryProjection;
 import com.ntg.demo.dto.CategoryTopicProjection;
 import com.ntg.demo.entity.Category;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CategoryRepo extends JpaRepository<Category,Integer> {
 
@@ -51,6 +53,10 @@ public interface CategoryRepo extends JpaRepository<Category,Integer> {
             ON t.category_id = c.id
             """,nativeQuery = true)
     List<CategoryTopicProjection> getAllCategoriesWithTopics();
+
+
+    @EntityGraph(attributePaths = {"topics"})
+    Optional<Category> findCategoryByName(String name);
 
 
 

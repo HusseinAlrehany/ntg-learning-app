@@ -1,19 +1,21 @@
-
 <div class="categories-container">
-
-  <!-- Section Title -->
-  <div class="section-header">
-    <h1>Categories & Topics</h1>
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-left">
+      <div class="back-link" (click)="goBack()">
+        <span class="back-arrow">←</span>
+        <span class="back-text">back</span>
+      </div>
+      <h1>Categories & Topics</h1>
+    </div>
   </div>
 
   <div class="category-card" *ngFor="let category of categories">
-
     <!-- Category Header -->
     <div class="category-header">
-
       <div class="category-left" (click)="toggleCategory(category)">
         <span class="toggle-icon">
-          {{ category.expanded ? '−' : '+' }}
+          {{ category.expanded ? "−" : "+" }}
         </span>
 
         <h2 class="category-name">
@@ -22,52 +24,63 @@
       </div>
 
       <div class="category-actions">
-        <button class="icon-btn" (click)="openEditCategoryPopup(category)">✏️</button>
-        <button class="icon-btn danger"
-                (click)="deleteCategoryById(category.categoryId)">🗑️</button>
+        <button class="icon-btn" (click)="openEditCategoryPopup(category)">
+          ✏️
+        </button>
+        <button
+          class="icon-btn danger"
+          (click)="deleteCategoryById(category.categoryId)"
+        >
+          🗑️
+        </button>
       </div>
     </div>
 
     <!-- Topics -->
     <div class="topics-list" *ngIf="category.expanded">
-
-      <div class="topic-row"
-           *ngFor="let topic of category.topicWithProgressList">
-
+      <div
+        class="topic-row"
+        *ngFor="let topic of category.topicWithProgressList"
+      >
         <span class="topic-name">
           <h2>{{ topic.name }}</h2>
         </span>
 
-        <div class="topic-actions" *ngIf="category.topicWithProgressList.length > 0">
-          <button class="icon-btn" (click)="openEditTopicPopup(category ,topic)">✏️</button>
-          <button class="icon-btn danger"
-                 (click)="deleteTopicById(topic.topicId)" >🗑️</button>
+        <div
+          class="topic-actions"
+          *ngIf="category.topicWithProgressList.length > 0"
+        >
+          <button
+            class="icon-btn"
+            (click)="openEditTopicPopup(category, topic)"
+          >
+            ✏️
+          </button>
+          <button
+            class="icon-btn danger"
+            (click)="deleteTopicById(topic.topicId)"
+          >
+            🗑️
+          </button>
         </div>
       </div>
 
-      <div class="empty-state" *ngIf="category.topicWithProgressList.length === 0">
+      <div
+        class="empty-state"
+        *ngIf="category.topicWithProgressList.length === 0"
+      >
         No topics added yet
       </div>
-
     </div>
-
   </div>
-
-
 
   <app-manage-topics-category-popup
     (close)="closePopup()"
-    
     [isOpen]="isPopupOpen()"
     [category]="selectedCategory()"
     [topic]="selectedTopic()"
     [isEditMode]="isEditMode()"
-    [errorMessage]="errorMessage">
-    
+    [errorMessage]="errorMessage"
+  >
   </app-manage-topics-category-popup>
-
 </div>
-
-
-
-

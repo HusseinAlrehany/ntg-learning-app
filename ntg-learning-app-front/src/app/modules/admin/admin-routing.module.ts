@@ -4,9 +4,9 @@ import { AdminDashboardComponent } from './components/admin-dashboard/admin-dash
 import { ViewAndManageTopicsComponent } from './components/view-and-manage-topics/view-and-manage-topics.component';
 
 const routes: Routes = [
-  {path: 'dashboard', component: AdminDashboardComponent},
-  {path: 'view-topics', component: ViewAndManageTopicsComponent}
-  
+  {path: 'dashboard', component: AdminDashboardComponent}, 
+  {path: 'view-topics', component: ViewAndManageTopicsComponent} , 
+    
 ];
 
 @NgModule({

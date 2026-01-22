@@ -7,7 +7,7 @@
     </h2>
 
     <!--Edit Category Form-->
-    <form *ngIf="!isEditMode" [formGroup]="editCategoryForm" class="popup-form">
+    <form *ngIf="!isEditMode" [formGroup]="editCategoryForm" class="popup-form" (ngSubmit)="updateCategory()">
       <div>
         <label class="form-label">Category Name</label>
         <input
@@ -29,8 +29,9 @@
           type="submit"
           class="submit-btn"
           [disabled]="editCategoryForm.invalid"
+                    
         >
-          Save
+          Save Category
         </button>
       </div>
     </form>
@@ -38,7 +39,7 @@
     <!--EDIT Topic FORM-->
 
     <div *ngIf="isEditMode" class="popup-form">
-      <form *ngIf="isEditMode" [formGroup]="editTopicForm" class="popup-form">
+      <form *ngIf="isEditMode" [formGroup]="editTopicForm" class="popup-form" (ngSubmit)="updateTopic()">
         <div>
           <label class="form-label">Topic Name</label>
           <input type="text" formControlName="name" class="form-input" />
@@ -50,17 +51,23 @@
           <input
             type="text"
             class="form-input"
-            [value]="category?.categoryName"            
+            formControlName="categoryName"    
+               
           />
         </div>
+
+        <div class="button-row">
+        <button class="cancel-btn" (click)="onCancel()">Close</button>
+        <button type="submit" class="submit-btn">Save Topic</button>
+      </div>
 
       </form>
 
       <!-- Buttons -->
-      <div class="button-row">
-        <button class="cancel-btn" (click)="onCancel()">Close</button>
-        <button type="submit" class="submit-btn">Save</button>
-      </div>
+      
     </div>
   </div>
 </div>
+
+
+<!--[value]="category?.categoryName"-->

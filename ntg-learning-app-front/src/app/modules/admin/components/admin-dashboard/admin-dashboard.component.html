@@ -14,7 +14,10 @@
     <div class="stats-actions">
         <button (click)="openAddCategoryPopup()" class="add-btn">
         <span>+</span> Add New Category
-        </button>  
+        </button>
+         <button (click)="openAddTopicPopup()" class="add-btn">
+        <span>+</span> Add New Topic
+        </button>    
         <button class="add-btn" [routerLink]="'/admin/view-topics'">View Topics and Category</button>   
     </div>
           
@@ -54,4 +57,14 @@
     [errorMessage]="errorMessage"
   >
   </app-manage-profile-popup>
+
+
+  <app-add-topic-popup
+   (close)="closeTopicPopup()"
+   [isOpen]="isAddTopicOpen()"
+   [errorMessage]="errorMessage"
+   (save)="handleTopicSave($event)"
+  >
+      
+  </app-add-topic-popup>
 </div>

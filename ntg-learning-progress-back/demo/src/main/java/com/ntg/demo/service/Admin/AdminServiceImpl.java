@@ -37,7 +37,7 @@ public class AdminServiceImpl implements AdminService{
 
          boolean isCategoryExists = categoryRepo.existsByNameIgnoreCase(categoryDTO.getName());
 
-        if(categoryDTO == null ||  categoryDTO.getName().isBlank()|| categoryDTO.getName() == null){
+        if(categoryDTO.getName().isBlank()){
             throw new IllegalArgumentException("category name can not be null or empty");
         }
 
@@ -64,7 +64,7 @@ public class AdminServiceImpl implements AdminService{
             throw new InvalidInputException("Topic name is added before");
         }
 
-        if(topicDTO != null && !topicDTO.getName().isEmpty() && topicDTO.getCategoryId() != null){
+        if(!topicDTO.getName().isEmpty() && topicDTO.getCategoryId() != null){
             try{
 
                 Optional<Category> dbCategory = categoryRepo.findById(topicDTO.getCategoryId());
@@ -191,6 +191,49 @@ public class AdminServiceImpl implements AdminService{
         System.out.println("Result size is " + finalResult.size());
 
         return finalResult;
+    }
+
+    @Override
+    public void updateCategory(UpdateCategoryRequest updateCategoryRequest, Integer categoryId) {
+
+        if(updateCategoryRequest != null) {
+            Category category = categoryRepo.findById(categoryId)
+                    .orElseThrow(() -> new NotFoundException("No Category Found"));
+
+            categoryRepo.save(categoryMapper.updateCategoryFromDTO(category, updateCategoryRequest));
+
+        }
+    }
+
+    @Transactional
+    @Override
+    public void updateTopic(UpdateTopicRequest updateTopicRequest, Integer topicId) {
+
+        if(topicId != null){
+
+            Topic topic = topicRepo.findById(topicId)
+                    .orElseThrow(()-> new NotFoundException("No Topic Found"));
+            Optional<Category> optionalCategory = Optional.ofNullable(categoryRepo.findCategoryByName(updateTopicRequest.getCategoryName())
+                    .orElseThrow(() -> new NotFoundException("Category Not Found")));
+
+            topic.setCategory(optionalCategory.get());
+
+            topicRepo.save(topicMapper.updateTopicFromDTO(topic, updateTopicRequest));
+
+        }
+
+    }
+
+    @Override
+    public List<CategoryProjection> getAllCategoryDropDown() {
+
+        List<CategoryProjection> categoryDropDown = categoryRepo
+                .getAllCategories();
+
+        if(categoryDropDown.isEmpty()){
+            throw new NotFoundException("No Categories created yet!");
+        }
+        return categoryDropDown;
     }
 
     @Override

@@ -25,7 +25,14 @@ public interface AdminService {
 
     Set<CategoryWithTopicsAndProgress> getAllCategoriesWithTopics();
 
+    void updateCategory(UpdateCategoryRequest updateCategoryRequest, Integer categoryId);
 
+    void updateTopic(UpdateTopicRequest updateTopicRequest, Integer topicId);
+
+    //List<CategoryDTO> getAllCategories();
+
+
+    List<CategoryProjection> getAllCategoryDropDown();
 
 
 

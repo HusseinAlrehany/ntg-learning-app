@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, signal } from '@angular/core';
 import { AdminService } from '../../service/admin.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { NotificationService } from '../../../../services/notification/notification.service';
 import { ManageTopicsCategoryPopupComponent } from '../manage-topics-category-popup/manage-topics-category-popup.component';
 
@@ -23,12 +23,17 @@ export class ViewAndManageTopicsComponent implements OnInit{
   errorMessage = '';
  
   constructor(private adminService: AdminService,
-              private notificationService: NotificationService
+              private notificationService: NotificationService,
+              private location: Location
   ){}
 
 
   ngOnInit(): void {
     this.getAllTopics();
+  }
+
+  goBack(){
+    this.location.back();
   }
 
  toggleCategory(category: any){
@@ -102,5 +107,6 @@ export class ViewAndManageTopicsComponent implements OnInit{
       }
     });
   }
+
 
 }

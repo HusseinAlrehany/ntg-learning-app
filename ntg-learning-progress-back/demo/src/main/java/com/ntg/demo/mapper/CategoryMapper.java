@@ -1,6 +1,7 @@
 package com.ntg.demo.mapper;
 
 import com.ntg.demo.dto.CategoryDTO;
+import com.ntg.demo.dto.UpdateCategoryRequest;
 import com.ntg.demo.entity.Category;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +30,12 @@ public class CategoryMapper {
 
         Category category = new Category();
         category.setName(categoryDTO.getName());
+
+        return category;
+    }
+
+    public Category updateCategoryFromDTO(Category category, UpdateCategoryRequest updateCategoryRequest){
+        category.setName(updateCategoryRequest.getName());
 
         return category;
     }

@@ -61,4 +61,35 @@ export class AdminService {
       withCredentials: true,
     });
   }
+
+ updateCategory(categoryDTO: any, categoryId: number): Observable<ApiResponse<String>>{
+
+  return this.httpClient.put<ApiResponse<String>>(BASE_URL + `updateCategory?categoryId=${categoryId}`, categoryDTO, {
+    withCredentials: true,
+  });
+
+ } 
+
+ updateTopic(topicDTO: any, topicId: number): Observable<ApiResponse<String>>{
+
+  return this.httpClient.put<ApiResponse<String>>(BASE_URL + `updateTopic?topicId=${topicId}`, topicDTO, {
+    withCredentials: true,
+  });
+
+ } 
+
+ getCategoriesForDropdown():Observable<any>{
+  return this.httpClient.get(BASE_URL + `allCategoriesDropDown`, {
+    withCredentials: true,
+  });
+ }
+
+ addTopic(topic: any): Observable<ApiResponse<String>>{
+
+  return this.httpClient.post<ApiResponse<String>>(BASE_URL + `add-topic`, topic, {
+    withCredentials: true,
+  });
+ }
+
+
 }
