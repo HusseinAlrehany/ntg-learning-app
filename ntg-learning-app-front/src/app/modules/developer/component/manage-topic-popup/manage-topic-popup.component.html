@@ -1,1 +1,78 @@
-<p>manage-topic-popup works!</p>
+<div class="popup-overlay" *ngIf="isOpen" (click)="closePopup()">
+    <div class="popup-container" (click)="$event.stopPropagation()">
+        <div class="popup-header">
+            <h2>Add New Topic</h2>
+            <button class="close-btn" (click)="closePopup()">×</button>
+        </div>
+
+        <form [formGroup]="addTopicForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="topicName">Topic Name</label>
+                <input 
+                    type="text" 
+                    id="topicName" 
+                    formControlName="topicName"
+                    placeholder="Enter topic name"
+                    class="form-input">
+                <div class="error-message" *ngIf="addTopicForm.get('topicName')?.invalid && addTopicForm.get('topicName')?.touched">
+                    Topic name is required (min 2 characters)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea 
+                    id="description" 
+                    formControlName="description"
+                    placeholder="Enter topic description"
+                    class="form-input"
+                    rows="3"></textarea>
+                <div class="error-message" *ngIf="addTopicForm.get('description')?.invalid && addTopicForm.get('description')?.touched">
+                    Description is required (min 5 characters)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category" formControlName="category" class="form-input">
+                    <option value="">Select a category</option>
+                    <option value="Core Java">Core Java</option>
+                    <option value="Advanced Java">Advanced Java</option>
+                    <option value="Database">Database</option>
+                    <option value="AI">AI</option>
+                    <option value="Design">Design</option>
+                    <option value="Tools">Tools</option>
+                    <option value="Devops">Devops</option>
+                    <option value="Frameworks">Frameworks</option>
+                    <option value="Other">Other</option>
+                </select>
+                <div class="error-message" *ngIf="addTopicForm.get('category')?.invalid && addTopicForm.get('category')?.touched">
+                    Please select a category
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Initial Status</label>
+                <div class="radio-group">
+                    <label class="radio-label">
+                        <input type="radio" formControlName="status" value="NOT_STARTED">
+                        <span>Not Started</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" formControlName="status" value="IN_PROGRESS">
+                        <span>In Progress</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" formControlName="status" value="MASTERED">
+                        <span>Mastered</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn-cancel" (click)="closePopup()">Cancel</button>
+                <button type="submit" class="btn-submit" [disabled]="!addTopicForm.valid">Add Topic</button>
+            </div>
+        </form>
+    </div>
+</div>

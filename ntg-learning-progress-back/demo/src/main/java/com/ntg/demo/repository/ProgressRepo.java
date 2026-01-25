@@ -4,6 +4,7 @@ import com.ntg.demo.dto.DeveloperProgressProjection;
 import com.ntg.demo.entity.DeveloperProgress;
 import com.ntg.demo.enums.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -52,6 +53,20 @@ int countMasteredTopicsPerCategory(@Param("userId") Integer userId,
                """, nativeQuery = true)
 int countTopicsPerCategory(@Param("categoryId") Integer categoryId);
 
+
+@Modifying
+@Query(value = """
+                UPDATE developer_progress dp
+                SET status = :status
+                WHERE dp.topic_id = :topicId AND dp.user_id = :userId
+               """, nativeQuery = true)
+int updateProgressStatus(@Param("topicId") Integer topicId,
+                         @Param("status")String status,
+                         Integer userId);
+
+
+
+boolean existsByTopic_IdAndUser_Id(Integer topicId, Integer userId);
 
 
 }

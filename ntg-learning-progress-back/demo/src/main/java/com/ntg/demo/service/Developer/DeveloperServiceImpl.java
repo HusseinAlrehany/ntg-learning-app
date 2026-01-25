@@ -2,16 +2,20 @@ package com.ntg.demo.service.Developer;
 
 import com.ntg.demo.dto.*;
 import com.ntg.demo.entity.Category;
+import com.ntg.demo.entity.DeveloperProgress;
 import com.ntg.demo.entity.Topic;
+import com.ntg.demo.entity.User;
 import com.ntg.demo.enums.Status;
 import com.ntg.demo.exception.NotFoundException;
 import com.ntg.demo.mapper.TopicMapper;
 import com.ntg.demo.repository.CategoryRepo;
 import com.ntg.demo.repository.ProgressRepo;
 import com.ntg.demo.repository.TopicRepo;
+import com.ntg.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -24,6 +28,7 @@ public class DeveloperServiceImpl implements DeveloperService{
     private final ProgressRepo progressRepo;
     private final CategoryRepo categoryRepo;
     private final TopicMapper topicMapper;
+    private final UserRepository userRepo;
 
     @Override
     public List<TopicDTO> getAllTopics(Integer categoryId) {
@@ -137,6 +142,10 @@ public class DeveloperServiceImpl implements DeveloperService{
 
                }
 
+               if(category.getTopicId() == null){
+                   continue;
+               }
+
                TopicWithProgress topicWithProgress = new TopicWithProgress();
                topicWithProgress.setTopicId(category.getTopicId());
                topicWithProgress.setDescription(category.getTopicDescription());
@@ -155,9 +164,9 @@ public class DeveloperServiceImpl implements DeveloperService{
                    category.setTotalTopics(total);
                    category.setCategoryProgress(total == 0 ? 0 : (mastered * 100)/ total);
 
-                finalResult.addAll(categoryWithTopicsAndProgressMap.values());
-
            }
+
+           finalResult.addAll(categoryWithTopicsAndProgressMap.values());
 
            System.out.println("Result size is " + finalResult.size());
 
@@ -186,7 +195,28 @@ public class DeveloperServiceImpl implements DeveloperService{
         }
     }
 
+    @Transactional
+    @Override
+    public int updateProgressStatus(Integer topicId, Status status, Integer userId) {
 
+        Topic topic = topicRepo.findById(topicId)
+                .orElseThrow(()-> new NotFoundException("No Topic Found"));
+        User user = userRepo.findById(userId)
+                .orElseThrow(()-> new NotFoundException("No User Found"));
+
+        boolean exists = progressRepo.existsByTopic_IdAndUser_Id(topicId, userId);
+
+        if(!exists) {
+            DeveloperProgress newProgress = new DeveloperProgress();
+            newProgress.setUser(user);
+            newProgress.setTopic(topic);
+            newProgress.setStatus(status);
+
+            progressRepo.save(newProgress);
+        }
+
+        return progressRepo.updateProgressStatus(topicId, status.name(), userId);
+    }
 
 
 }

@@ -33,7 +33,7 @@ public interface CategoryRepo extends JpaRepository<Category,Integer> {
                    t.description AS topicDescription,
                    coalesce(dp.status, 'NOT_STARTED') AS topicStatus
             FROM category c
-            INNER JOIN topic t
+            LEFT JOIN topic t
             ON c.id = t.category_id
             LEFT JOIN developer_progress dp
             ON dp.topic_id = t.id AND dp.user_id = :userId

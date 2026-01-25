@@ -1,27 +1,116 @@
 <div class="dev-page">
     <header class="dev-header">
-        <h1 class="title">Topics</h1>
+        <h1 class="title">Developer Topics Dashboard</h1>
         <button (click)="logout()" class="logout-btn">Logout</button>
     </header>
 
     <!-- Stats / Add Section -->
     <div class="stats-bar">
         <div>
-            <span class="stats-label">Total Developers</span>
-            <span class="stats-value"></span>
+            <span class="stats-label">Total Categories</span>
+            <span class="stats-value">{{ totalDevelopers }}</span>
         </div>
         <button class="add-btn" (click)="openAddTopicPopup()">
             <span>+</span> Add New Topic
         </button>
     </div>
 
+    <!-- Validation Message -->
+    <div *ngIf="validationMessage" class="validation-message">
+        {{ validationMessage }}
+    </div>
 
+    <!-- Categories Grid -->
+    <div class="categories-grid">
+        <div *ngFor="let category of categories" class="category-card" [class.expanded]="category.isExpanded">
+            <div class="category-header" (click)="toggleCategory(category.categoryId)">
+                <div class="header-left">
+                    <h2 class="category-name">{{ category.categoryName }}</h2>
+                    <span class="topics-count-badge">{{ category.totalTopics }} topics</span>
+                </div>
+                <div class="header-right">
+                    <div class="category-stats">
+                        <span class="progress-badge">{{ category.categoryProgress }}%</span>
+                        <span class="mastered-text">{{ category.masteredTopics }}/{{ category.totalTopics }} Mastered</span>
+                    </div>
+                    <button class="expand-btn" [class.rotated]="category.isExpanded">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                </div>
+            </div>
 
+            <div class="progress-bar-container">
+                <div class="progress-bar" [style.width.%]="category.categoryProgress"></div>
+            </div>
 
+            <!-- Expandable Topics List -->
+            <div class="topics-container" [class.show]="category.isExpanded">
+                <div class="topics-list">
+                    <div *ngIf="category.topicWithProgressList.length === 0" class="empty-state">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="12" y1="18" x2="12" y2="12"></line>
+                            <line x1="9" y1="15" x2="15" y2="15"></line>
+                        </svg>
+                        <p>No topics available in this category</p>
+                       
+                    </div>
+
+                    <div *ngFor="let topic of category.topicWithProgressList" class="topic-item">
+                        <div class="topic-info">
+                            <h3 class="topic-name">{{ topic.name }}</h3>
+                            <p class="topic-description">{{ topic.description }}</p>
+                        </div>
+
+                        <div class="status-controls">
+                            <label class="status-checkbox" [class.checked]="topic.status === 'NOT_STARTED' || pendingUpdates.get(topic.topicId) === 'NOT_STARTED'">
+                                <input 
+                                    type="radio" 
+                                    [name]="'topic-' + topic.topicId"
+                                    [checked]="topic.status === 'NOT_STARTED' || pendingUpdates.get(topic.topicId) === 'NOT_STARTED'"
+                                    (change)="onStatusChange(topic.topicId, 'NOT_STARTED', topic.status)">
+                                <span class="checkbox-custom not-started"></span>
+                                <span class="checkbox-label">Not Started</span>
+                            </label>
+
+                            <label class="status-checkbox" [class.checked]="topic.status === 'IN_PROGRESS' || pendingUpdates.get(topic.topicId) === 'IN_PROGRESS'">
+                                <input 
+                                    type="radio" 
+                                    [name]="'topic-' + topic.topicId"
+                                    [checked]="topic.status === 'IN_PROGRESS' || pendingUpdates.get(topic.topicId) === 'IN_PROGRESS'"
+                                    (change)="onStatusChange(topic.topicId, 'IN_PROGRESS', topic.status)">
+                                <span class="checkbox-custom in-progress"></span>
+                                <span class="checkbox-label">In Progress</span>
+                            </label>
+
+                            <label class="status-checkbox" [class.checked]="topic.status === 'MASTERED' || pendingUpdates.get(topic.topicId) === 'MASTERED'">
+                                <input 
+                                    type="radio" 
+                                    [name]="'topic-' + topic.topicId"
+                                    [checked]="topic.status === 'MASTERED' || pendingUpdates.get(topic.topicId) === 'MASTERED'"
+                                    (change)="onStatusChange(topic.topicId, 'MASTERED', topic.status)">
+                                <span class="checkbox-custom mastered"></span>
+                                <span class="checkbox-label">Mastered</span>
+                            </label>
+
+                            <button 
+                                *ngIf="hasUpdate(topic.topicId)" 
+                                class="update-btn"
+                                (click)="updateTopicStatus(topic)">
+                                Update
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <app-manage-topic-popup
        (close)="closePopup()"
        [isOpen]="isPopupOpen()">
-        
     </app-manage-topic-popup>
-    </div>
+</div>
