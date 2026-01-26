@@ -91,5 +91,13 @@ export class AdminService {
   });
  }
 
+ updateDevName(userId: number, devName: string): Observable<ApiResponse<String>> {
+
+  return this.httpClient.put<ApiResponse<String>>(BASE_URL + `updateDevName?userId=${userId}&devName=${devName}`, null, {
+    withCredentials: true,
+    
+  });
+ }
+
 
 }

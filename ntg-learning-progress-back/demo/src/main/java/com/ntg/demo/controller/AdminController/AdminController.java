@@ -104,7 +104,13 @@ public class AdminController {
         return ResponseEntity.ok(adminService.getAllCategoryDropDown());
     }
 
+    @PutMapping("/updateDevName")
+    public ResponseEntity<ApiResponse<String>> updateDevName(@RequestParam Integer userId,
+                                                             @RequestParam String devName){
+        adminService.updateDevName(userId, devName);
 
+        return ResponseEntity.ok(new ApiResponse<>("Developer Name is updated Successfully"));
 
+    }
 
 }

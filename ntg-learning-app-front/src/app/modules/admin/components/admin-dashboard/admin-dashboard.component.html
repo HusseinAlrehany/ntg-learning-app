@@ -51,6 +51,7 @@
   <app-manage-profile-popup
     (close)="closePopup()"
     (save)="handleCategorySave($event)"
+    (profileUpdated)="onProfileUpdate($event)"
     [isOpen]="isPopupOpen()"
     [isEditMode]="selectedProfile() !== null"
     [profile]="selectedProfile()"

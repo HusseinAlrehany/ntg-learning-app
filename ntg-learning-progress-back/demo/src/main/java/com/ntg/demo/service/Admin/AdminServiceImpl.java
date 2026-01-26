@@ -3,6 +3,7 @@ package com.ntg.demo.service.Admin;
 import com.ntg.demo.dto.*;
 import com.ntg.demo.entity.Category;
 import com.ntg.demo.entity.Topic;
+import com.ntg.demo.entity.User;
 import com.ntg.demo.enums.Status;
 import com.ntg.demo.exception.CategoryAlreadyExistsException;
 import com.ntg.demo.exception.InvalidInputException;
@@ -222,6 +223,18 @@ public class AdminServiceImpl implements AdminService{
 
         }
 
+    }
+
+    @Transactional
+    @Override
+    public void updateDevName(Integer userId, String devName ) {
+
+        if(userId != null){
+            User developer = userRepo.findById(userId)
+                    .orElseThrow(()-> new NotFoundException("No Developer Found"));
+            developer.setName(devName);
+            userRepo.save(developer);
+        }
     }
 
     @Override

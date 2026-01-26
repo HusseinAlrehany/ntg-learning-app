@@ -66,10 +66,6 @@ openEditPopup(userId: number){
 
 }
 
-editUserProfile(){
-   
-}
-
 closePopup(){
   this.selectedProfile.set(null);
   this.isPopupOpen.set(false);
@@ -146,6 +142,22 @@ deleteUserById(userId: number){
    })
 
    
+}
+
+//emit profile updates to the user for instant update of UI
+onProfileUpdate(updatedProfile: UserProfile){
+
+   const index = this.profilesList.findIndex(p=> p.userId === updatedProfile.userId);
+   if(index !== -1){
+     this.profilesList[index] = {
+      ...this.profilesList[index],
+      devName: updatedProfile.devName,
+      userName: updatedProfile.devName}
+
+      this.profilesList = [...this.profilesList];
+   }
+
+   this.selectedProfile.set(updatedProfile);
 }
 
 

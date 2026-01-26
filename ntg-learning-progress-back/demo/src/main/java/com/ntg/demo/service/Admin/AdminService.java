@@ -31,6 +31,8 @@ public interface AdminService {
 
     //List<CategoryDTO> getAllCategories();
 
+    void updateDevName(Integer userId, String devName);
+
 
     List<CategoryProjection> getAllCategoryDropDown();
 

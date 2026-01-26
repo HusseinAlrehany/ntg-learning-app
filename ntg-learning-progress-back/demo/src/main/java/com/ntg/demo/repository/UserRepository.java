@@ -22,11 +22,13 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             SELECT  u.name AS devName,
                     u.id AS userId,
                     COALESCE(SUM(dp.status = 'MASTERED'), 0) AS mastered,
-            	    COALESCE(SUM(dp.status = 'NOT_STARTED'), 0) AS notStarted,
-                    COALESCE(SUM(dp.status = 'IN_PROGRESS'), 0) AS inProgress   
+                    COALESCE(SUM(dp.status = 'IN_PROGRESS'), 0) AS inProgress,
+            	    COALESCE(SUM(dp.status IS NULL), 0) AS notStarted                         
             FROM `user` u
+            JOIN topic t
+            ON 1 = 1
             LEFT JOIN  developer_progress dp
-            ON u.id = dp.user_id
+            ON dp.topic_id = t.id AND u.id = dp.user_id
             WHERE u.id = :userId
             GROUP BY u.id;
             """, nativeQuery = true)

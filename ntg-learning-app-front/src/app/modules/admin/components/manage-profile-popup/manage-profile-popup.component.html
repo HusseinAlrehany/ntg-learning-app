@@ -48,7 +48,8 @@
 
     <!--EDIT PROFILE FORM-->
 
-    <div *ngIf="isEditMode" class="popup-form">
+    <form [formGroup]="editProfileForm" 
+    *ngIf="isEditMode" class="popup-form">
 
       <!-- Developer Name -->
       <div>
@@ -56,7 +57,7 @@
         <input
           type="text"
           class="form-input"
-          [value]="profile?.devName"
+          formControlName="devName"
         
         />
       </div>
@@ -95,14 +96,17 @@
           Close
         </button>
         <button
-          type="submit"
+          type="button"
           class="submit-btn"
+          (click)="updateDevName(profile!.userId, editProfileForm.get('devName')?.value)"
         >
           Save
         </button>
       </div>
 
-    </div>
+    
+
+    </form>
 
   </div>
 </div>
