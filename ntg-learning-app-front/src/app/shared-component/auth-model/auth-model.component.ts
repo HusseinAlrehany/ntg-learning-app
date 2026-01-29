@@ -121,9 +121,9 @@ export class AuthModelComponent implements OnInit{
             this.close.emit();
 
             if(this.storageService.isAdminLoggedIn()){
-              this.router.navigate(['/admin/dashboard']);
+              this.router.navigate(['/authenticated/admin/dashboard']);
             } else {
-              this.router.navigate(['/developer/dashboard']);
+              this.router.navigate(['/authenticated/developer/dashboard']);
             }
 
           

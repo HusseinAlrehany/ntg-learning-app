@@ -1,9 +1,30 @@
 
 <nav class="navbar">
-  <div class="logo">📘 NTG Learning</div>
+  <div class="navbar-content">
+    <div class="navbar-left">
+      <!-- Menu toggle for authenticated users on mobile -->
+      <button 
+        *ngIf="isLoggedIn"
+        class="menu-toggle"
+        (click)="onToggleSidebar()"
+        title="Toggle menu">
+        ☰
+      </button>
+      <div class="logo">📘 NTG Learning</div>
+    </div>
 
-  <div class="actions">
-    <button class="link" (click)="open('signin')">Sign In</button>
-    <button class="primary" (click)="open('signup')">Get Started</button>
+    <div class="navbar-right">
+      <div class="actions">
+        <ng-container *ngIf="!isLoggedIn">
+          <button class="link" (click)="open('signin')">Sign In</button>
+          <button class="primary" (click)="open('signup')">Get Started</button>
+        </ng-container>
+        
+        <ng-container *ngIf="isLoggedIn">
+          <span class="user-role">{{ userRole }}</span>
+          <button class="link logout" (click)="logout()">Logout</button>
+        </ng-container>
+      </div>
+    </div>
   </div>
 </nav>

@@ -1,49 +1,48 @@
 <div class="admin-page">
   <header class="admin-header">
-    <h1 class="title">Profiles</h1>
-    <button (click)="logout()" class="logout-btn">Logout</button>
+    <h1 class="title">Admin Dashboard</h1>
   </header>
 
   <!-- Stats / Add Section -->
   <div class="stats-bar">
-    <div>
+    <div class="stats-card">
       <span class="stats-label">Total Developers</span>
       <span class="stats-value">{{ profilesList.length }}</span>
     </div>
 
     <div class="stats-actions">
-        <button (click)="openAddCategoryPopup()" class="add-btn">
-        <span>+</span> Add New Category
-        </button>
-         <button (click)="openAddTopicPopup()" class="add-btn">
-        <span>+</span> Add New Topic
-        </button>    
-        <button class="add-btn" [routerLink]="'/admin/view-topics'">View Topics and Category</button>   
+      <button (click)="openAddCategoryPopup()" class="add-btn">
+        <span>+</span> Add Category
+      </button>
+      <button (click)="openAddTopicPopup()" class="add-btn">
+        <span>+</span> Add Topic
+      </button>    
+      <button class="add-btn" [routerLink]="'/authenticated/admin/view-topics'">
+        <span>📚</span> View Topics
+      </button>
     </div>
-          
   </div>
 
-  <!-- List -->
-  <div class="profiles-list">
-    <div *ngFor="let p of profilesList" class="profile-card">
-      <div class="profile-info">
-        <!-- Avatar Placeholder -->
-        <div class="avatar-small">
-          {{ p.userName != null ? p.userName.charAt(0) : "" }}
+  <!-- Profiles List -->
+  <div class="profiles-section">
+    <h2 class="section-title">Developer Profiles</h2>
+    <div class="profiles-list">
+      <div *ngFor="let p of profilesList" class="profile-card">
+        <div class="profile-info">
+          <!-- Avatar Placeholder -->
+          <div class="avatar-small">
+            {{ p.userName != null ? p.userName.charAt(0).toUpperCase() : "?" }}
+          </div>
+          <div class="profile-details">
+            <h3 class="profile-name">{{ p.userName }}</h3>
+            <p class="profile-code">Progress: <strong>{{ p.overAllProgress }}%</strong></p>
+          </div>
         </div>
-        <div>
-          <h3 class="profile-name">{{ p.userName }}</h3>
-          <p class="profile-code">{{ p.overAllProgress }}%</p>
-        </div>
-      </div>
 
-      <div class="actions-group">
-        <!-- Status Dot logic? Green=Skilled, etc. Just simple text for now -->
-        <span class="status-badge">
-          <!--{{ getHighestStatus(p) }}-->
-        </span>
-        <button class="icon-btn" (click)="openEditPopup(p.userId)">⚙️</button>
-        <button class="icon-btn" (click)="deleteUserById(p.userId)">🗑️</button>
+        <div class="actions-group">
+          <button class="icon-btn edit-btn" (click)="openEditPopup(p.userId)" title="Edit profile">⚙️</button>
+          <button class="icon-btn delete-btn" (click)="deleteUserById(p.userId)" title="Delete user">🗑️</button>
+        </div>
       </div>
     </div>
   </div>

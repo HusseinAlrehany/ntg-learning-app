@@ -12,7 +12,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 export class ManageTopicPopupComponent {
 
   @Input() isOpen = false;
-  @Output() close = new EventEmitter<void>();
+  /*@Output() close = new EventEmitter<void>();
 
   addTopicForm!: FormGroup;
 
@@ -36,5 +36,5 @@ export class ManageTopicPopupComponent {
       // Add your service call here to save the topic
       this.closePopup();
     }
-  }
+  }*/
 }

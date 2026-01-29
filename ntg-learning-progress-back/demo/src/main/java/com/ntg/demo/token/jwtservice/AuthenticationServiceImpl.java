@@ -11,6 +11,8 @@ import com.ntg.demo.token.utils.JwtUtils;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,7 +24,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService{
@@ -32,6 +34,16 @@ public class AuthenticationServiceImpl implements AuthenticationService{
     private final AuthenticationManager authenticationManager;
     private final AppUserDetailsService appUserDetailsService;
     private final UserMapper userMapper;
+
+    //configured in env variables in the project
+    @Value("${admin.email}")
+    private String adminEmail;
+
+    @Value("${admin.password}")
+    private String adminPassword;
+
+    @Value("${admin.name}")
+    private String adminName;
 
 
     @Override
@@ -45,12 +57,13 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         User adminUser = userRepository.findByRole(UserRole.ADMIN);
         if(adminUser == null){
             User admin = new User();
-            admin.setName("admin");
-            admin.setEmail("admin@ntg.com");
+            admin.setName(adminName);
+            admin.setEmail(adminEmail);
             admin.setRole(UserRole.ADMIN);
-            admin.setPassword(new BCryptPasswordEncoder().encode("test123"));
+            admin.setPassword(new BCryptPasswordEncoder().encode(adminPassword));
 
             userRepository.save(admin);
+            log.info("Admin user created successfully");
         }
     }
 

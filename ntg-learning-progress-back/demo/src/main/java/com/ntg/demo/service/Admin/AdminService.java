@@ -17,7 +17,7 @@ public interface AdminService {
 
     void deleteUserProfileById(Integer userId);
 
-    List<TopicDTO> getAllTopics(Integer categoryId);
+    //List<TopicDTO> getAllTopics(Integer categoryId);
 
     UserProfile getUserProfileDetails(Integer userId);
 
@@ -32,7 +32,6 @@ public interface AdminService {
     //List<CategoryDTO> getAllCategories();
 
     void updateDevName(Integer userId, String devName);
-
 
     List<CategoryProjection> getAllCategoryDropDown();
 

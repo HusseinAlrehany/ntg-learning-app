@@ -1,0 +1,19 @@
+<div class="authenticated-layout">
+  <!-- Navbar -->
+  <nav class="navbar-wrapper">
+    <app-navbar (toggleSidebar)="toggleSidebar()"></app-navbar>
+  </nav>
+
+  <!-- Main Content Area -->
+  <div class="main-container">
+    <!-- Sidebar -->
+    <aside class="sidebar-wrapper" [class.open]="sidebarOpen">
+      <app-sidebar (closeSidebar)="closeSidebar()"></app-sidebar>
+    </aside>
+
+    <!-- Content -->
+    <main class="content-wrapper">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

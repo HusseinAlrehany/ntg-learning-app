@@ -36,11 +36,11 @@ public class AdminController {
     }
 
 
-    @GetMapping("/all-topics/{categoryId}")
+   /* @GetMapping("/all-topics/{categoryId}")
     public ResponseEntity<List<TopicDTO>> getAllTopics(@PathVariable Integer categoryId){
 
         return ResponseEntity.ok(adminService.getAllTopics(categoryId));
-    }
+    }*/
 
     @GetMapping("/get-user-profile")
     public ResponseEntity<UserProfile> getUserProfileDetails(@RequestParam  Integer userId){

@@ -104,7 +104,7 @@ public class AdminServiceImpl implements AdminService{
         categoryRepo.deleteById(categoryId);
     }
 
-    @Override
+    /*@Override
     public List<TopicDTO> getAllTopics(Integer categoryId) {
           List<Topic> topics = new ArrayList<>();
 
@@ -119,7 +119,7 @@ public class AdminServiceImpl implements AdminService{
         log.info("Topics Found for category ID {} {} ", categoryId , topics.size());
 
         return topicMapper.toTopicDTOList(topics);
-    }
+    }*/
 
     @Override
     public UserProfile getUserProfileDetails(Integer userId) {

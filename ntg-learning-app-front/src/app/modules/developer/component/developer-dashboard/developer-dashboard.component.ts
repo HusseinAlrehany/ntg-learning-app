@@ -106,19 +106,4 @@ export class DeveloperDashboardComponent implements OnInit {
       }
     });
   }
-
-  logout(){
-    this.authService.logout().subscribe({
-      next: (res) => {
-        this.storageService.clearUserData();
-        this.notificationService.success(res.message);
-        this.router.navigate(['/']);
-      },
-      error: (error: HttpErrorResponse) => {
-        this.errorMessage = error.error?.errorMessage || 
-                        error.error?.error ||
-                        'Logout failed';
-      }
-    });
-  }
 }

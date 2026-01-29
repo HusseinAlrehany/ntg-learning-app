@@ -21,15 +21,45 @@
 
 .header-content {
   display: flex;
-  flex-direction: column;
   align-items: flex-start;
+  gap: 24px;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: #f1f5f9;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 18px;
+  color: #2563eb;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
   gap: 8px;
+  padding: 0 12px;
+  font-weight: 600;
+}
+
+.back-btn:hover {
+  background: #e0f2fe;
+  transform: translateX(-2px);
+  color: #1d4ed8;
+}
+
+.back-arrow {
+  font-size: 22px;
+  line-height: 1;
+  font-weight: 700;
 }
 
 .page-title {
   font-size: 32px;
   font-weight: 800;
-  color: green;
+  color: #0f172a;
   margin: 0 0 8px 0;
   letter-spacing: -1px;
 }
@@ -117,10 +147,10 @@
   justify-content: center;
   width: 36px;
   height: 36px;
-  background: #d0ebe8;
+  background: #dbeafe;
   border: none;
   border-radius: 10px;
-  color: #17a697;
+  color: #2563eb;
   cursor: pointer;
   transition: all 0.3s ease;
   padding: 0;
@@ -128,12 +158,12 @@
 }
 
 .toggle-icon.expanded {
-  background: #b8ddd7;
+  background: #bfdbfe;
   transform: rotate(180deg);
 }
 
 .toggle-icon:hover {
-  background: #b8ddd7;
+  background: #bfdbfe;
 }
 
 .toggle-icon svg {
@@ -166,8 +196,8 @@
   justify-content: center;
   width: 40px;
   height: 40px;
-  background: #d0ebe8;
-  color: #0d7568;
+  background: #dbeafe;
+  color: #1e40af;
   border-radius: 10px;
   font-weight: 700;
   font-size: 16px;
@@ -269,14 +299,14 @@
 }
 
 .edit-btn {
-  background: #d0ebe8;
-  color: #0d7568;
+  background: #dbeafe;
+  color: #1e40af;
 }
 
 .edit-btn:hover {
-  background: #b8ddd7;
+  background: #bfdbfe;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(23, 166, 151, 0.15);
+  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.15);
 }
 
 .delete-btn {
@@ -291,12 +321,12 @@
 }
 
 .secondary-btn {
-  background: #d0ebe8;
-  color: #0d7568;
+  background: #dbeafe;
+  color: #1e40af;
 }
 
 .secondary-btn:hover {
-  background: #b8ddd7;
+  background: #bfdbfe;
 }
 
 .danger-btn {

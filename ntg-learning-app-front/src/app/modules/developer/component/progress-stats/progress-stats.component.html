@@ -1,0 +1,150 @@
+<div class="progress-page">
+  <!-- Header -->
+  <header class="progress-header">
+    <div class="header-content">
+      <h1 class="title">Learning Progress</h1>
+      <p class="subtitle">Track your learning journey and achievements</p>
+    </div>
+    <a [routerLink]="'/authenticated/developer/dashboard'" class="back-btn">
+      ← Back to Topics
+    </a>
+  </header>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Overall Progress Card -->
+  <div class="overall-card">
+    <div class="card-content">
+      <div class="overall-stat">
+        <div class="stat-circle">
+          <svg viewBox="0 0 100 100" class="progress-ring">
+            <circle cx="50" cy="50" r="45" class="ring-bg"></circle>
+            <circle cx="50" cy="50" r="45" class="ring-progress" 
+              [style.--progress]="totalProgress" style="stroke: #10b981;"></circle>
+          </svg>
+          <div class="stat-value">{{ totalProgress }}%</div>
+        </div>
+        <div class="stat-info">
+          <h3>Overall Progress</h3>
+          <p class="stat-detail">{{ masteredTopics }} of {{ totalTopics }} topics mastered</p>
+        </div>
+      </div>
+
+      <div class="status-breakdown">
+        <div class="status-item">
+          <div class="status-icon mastered">✓</div>
+          <div class="status-content">
+            <span class="status-label">Mastered</span>
+            <span class="status-count">{{ statusStats.mastered }}</span>
+          </div>
+          <div class="status-bar">
+            <div class="status-bar-fill" [style.width.%]="getMasteredPercentage()" style="background: #10b981;"></div>
+          </div>
+        </div>
+
+        <div class="status-item">
+          <div class="status-icon in-progress">◐</div>
+          <div class="status-content">
+            <span class="status-label">In Progress</span>
+            <span class="status-count">{{ statusStats.inProgress }}</span>
+          </div>
+          <div class="status-bar">
+            <div class="status-bar-fill" [style.width.%]="getInProgressPercentage()" style="background: #3b82f6;"></div>
+          </div>
+        </div>
+
+        <div class="status-item">
+          <div class="status-icon not-started">○</div>
+          <div class="status-content">
+            <span class="status-label">Not Started</span>
+            <span class="status-count">{{ statusStats.notStarted }}</span>
+          </div>
+          <div class="status-bar">
+            <div class="status-bar-fill" [style.width.%]="getNotStartedPercentage()" style="background: #f3f4f6;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key Statistics -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon total">📚</div>
+      <h3>Total Topics</h3>
+      <p class="stat-number">{{ totalTopics }}</p>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon mastered-stat">🎯</div>
+      <h3>Topics Mastered</h3>
+      <p class="stat-number">{{ masteredTopics }}</p>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon in-prog">⚡</div>
+      <h3>In Progress</h3>
+      <p class="stat-number">{{ inProgressTopics }}</p>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon todo">📝</div>
+      <h3>To Start</h3>
+      <p class="stat-number">{{ notStartedTopics }}</p>
+    </div>
+  </div>
+
+  <!-- Category Breakdown -->
+  <div class="categories-section" *ngIf="categoryStats.length > 0">
+    <h2 class="section-title">Category Breakdown</h2>
+    
+    <div class="categories-table">
+      <div class="table-header">
+        <div class="table-col col-name">Category</div>
+        <div class="table-col col-progress">Progress</div>
+        <div class="table-col col-mastered">Mastered</div>
+        <div class="table-col col-total">Total</div>
+      </div>
+
+      <div class="table-body">
+        <div *ngFor="let cat of categoryStats" class="table-row">
+          <div class="table-col col-name">
+            <span class="category-badge">{{ cat.name }}</span>
+          </div>
+          <div class="table-col col-progress">
+            <div class="progress-cell">
+              <div class="progress-bar-wrapper">
+                <div class="progress-bar-container">
+                  <div class="progress-bar-fill" [style.width.%]="cat.progress"></div>
+                </div>
+              </div>
+              <span class="progress-text">{{ cat.progress }}%</span>
+            </div>
+          </div>
+          <div class="table-col col-mastered">
+            <span class="mastered-badge">{{ cat.mastered }}/{{ cat.total }}</span>
+          </div>
+          <div class="table-col col-total">
+            <span class="total-badge">{{ cat.total }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="categories.length === 0 && !errorMessage" class="empty-state">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+      <polyline points="14 2 14 8 20 8"></polyline>
+    </svg>
+    <h3>No Progress Data</h3>
+    <p>Start learning topics to see your progress here!</p>
+    <a [routerLink]="'/authenticated/developer/dashboard'" class="cta-btn">
+      Go to Topics
+    </a>
+  </div>
+</div>

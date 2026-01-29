@@ -4,7 +4,9 @@ import com.ntg.demo.entity.User;
 import com.ntg.demo.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,15 +23,28 @@ import java.util.function.Function;
     public class JwtUtils {
 
         private SecretKey key;
+
         @Autowired
         private UserRepository userRepository;
 
-        private  static  final long EXPIRATION_TIME = 86400000; //24hours or 86400000 milisecs
+        // Inject the secret from application properties
+        @Value("${jwt.secret}")
+        private String jwtSecretString;
 
-        public JwtUtils(){
-            String secretString = "843567893696976453275974432697R634976R738467TR678T34865R6834R8763T478378637664538745673865783678548735687R3";
-            byte[]keyBytes = Base64.getDecoder().decode(secretString.getBytes(StandardCharsets.UTF_8));
-            this.key = new SecretKeySpec(keyBytes, "HmacSHA256");
+        @Value("${jwt.expiration}")
+        private long expirationTime;
+
+        @PostConstruct
+        public void init() {
+                String secretToUse = jwtSecretString;
+                // Decode and create the secret key
+                byte[] keyBytes = Base64.getDecoder().decode(secretToUse.getBytes(StandardCharsets.UTF_8));
+                this.key = new SecretKeySpec(keyBytes, "HmacSHA256");
+
+                System.out.println("JWT Secret initialized successfully");
+
+                this.key = new SecretKeySpec(keyBytes, "HmacSHA256");
+
         }
 
 
@@ -37,7 +52,7 @@ import java.util.function.Function;
             return Jwts.builder()
                     .subject(userDetails.getUsername())
                     .issuedAt(new Date(System.currentTimeMillis()))
-                    .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                    .expiration(new Date(System.currentTimeMillis() + expirationTime))
                     .signWith(key)
                     .compact();
         }

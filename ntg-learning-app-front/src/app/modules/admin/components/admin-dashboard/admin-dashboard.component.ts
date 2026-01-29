@@ -100,7 +100,7 @@ handleTopicSave(topic: any) {
   this.adminService.addTopic(topic).subscribe({
     next: (res) => {
       this.notificationService.success(res.message);
-      this.closePopup();
+      this.closeTopicPopup();
       this.router.navigate(['/admin/view-topics']);
     },
     error: (error: HttpErrorResponse) => {
@@ -159,29 +159,5 @@ onProfileUpdate(updatedProfile: UserProfile){
 
    this.selectedProfile.set(updatedProfile);
 }
-
-
-logout() {
-  this.authService.logout().subscribe({
-    next: (res)=> {
-       
-      this.storageService.clearUserData();
-      this.notificationService.success('Logout Successful');
-      this.router.navigate(['/']);
-
-    },
-
-    error: (error: HttpErrorResponse)=> {
-       this.errorMessage = error.error?.errorMessage || 
-                           error.error?.error ||
-                           'logut failed';
-    }
-  })
-
-}
-
-
-
-  
 
 }
