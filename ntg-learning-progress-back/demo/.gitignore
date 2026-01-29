@@ -41,6 +41,7 @@ dev.env
 # Local property files
 **/application-local.properties
 application-local.properties
+application-dev.properties
 
 # Build files
 *.jar
