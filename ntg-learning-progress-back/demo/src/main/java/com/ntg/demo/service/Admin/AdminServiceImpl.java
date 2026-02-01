@@ -53,6 +53,7 @@ public class AdminServiceImpl implements AdminService{
 
             } catch(Exception ex){
                 log.error("ERROR while adding category {}: " , ex.getMessage());
+                throw ex;
             }
 
 
@@ -103,23 +104,6 @@ public class AdminServiceImpl implements AdminService{
 
         categoryRepo.deleteById(categoryId);
     }
-
-    /*@Override
-    public List<TopicDTO> getAllTopics(Integer categoryId) {
-          List<Topic> topics = new ArrayList<>();
-
-        if(categoryId != null){
-            topics = topicRepo.findTopicsByCategoryId(categoryId);
-        }
-
-        if (topics.isEmpty()){
-            throw new NotFoundException("No Topics found for Category ID: " + categoryId);
-        }
-
-        log.info("Topics Found for category ID {} {} ", categoryId , topics.size());
-
-        return topicMapper.toTopicDTOList(topics);
-    }*/
 
     @Override
     public UserProfile getUserProfileDetails(Integer userId) {
